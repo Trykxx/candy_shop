@@ -20,14 +20,15 @@ class ArticleController extends AbstractController
         return $this->render('admin/article/index.html.twig');
     }
 
-    #[Route('/create', name:'create')]
-    public function create(EntityManagerInterface $em){
+    #[Route('/create', name: 'create')]
+    public function create(EntityManagerInterface $em)
+    {
 
-        $candy=new Candy();
+        $candy = new Candy();
         $candy->setName('Sucette')
-        ->setSlug('fraise')
-        ->setDescription('Un super bonbon')
-        ->setCreateAt(new DateTimeImmutable());
+            ->setSlug('fraise')
+            ->setDescription('Un super bonbon')
+            ->setCreateAt(new DateTimeImmutable());
 
         $em->persist($candy);
         $em->flush();
@@ -36,8 +37,9 @@ class ArticleController extends AbstractController
         return $this->render('admin/article/create.html.twig');
     }
 
-    #[Route('/update/{id}', name:'update', requirements:['id'=>Requirement::DIGITS])]
-    public function update($id, CandyRepository $repository, EntityManagerInterface $em){
+    #[Route('/update/{id}', name: 'update', requirements: ['id' => Requirement::DIGITS])]
+    public function update($id, CandyRepository $repository, EntityManagerInterface $em)
+    {
 
         // find() permet de récupérer un enregistrement de la basse de données grace a son id.
         // $candy = $repository->find(1);
@@ -59,8 +61,15 @@ class ArticleController extends AbstractController
         return $this->render('admin/article/update.html.twig');
     }
 
-    #[Route('/delete/{id}', name:'delete', requirements:['id'=>Requirement::DIGITS])]
-    public function delete(){
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => Requirement::DIGITS])]
+    public function delete($id, CandyRepository $repository, EntityManagerInterface $em, Candy $candy)
+    {
+        // $candy = $repository->find($id);
+
+        $em->remove($candy);
+
+        $em->flush();
+
         return $this->render('admin/article/delete.html.twig');
     }
 }
