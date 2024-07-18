@@ -2,31 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+use App\Entity\Candy;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class CategoryType extends AbstractType
+
+class CandyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class,[
+            ->add('name',TextType::class,[
                 'label'=>'Nom',
-                'required' => false,
-                'empty_data' => '',
-                // 'help' => 'un peu aide'
+                'empty_data' => ''
             ])
             ->add('description')
+            ->add('slug')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            'data_class' => Candy::class,
         ]);
     }
 }

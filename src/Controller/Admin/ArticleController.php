@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Candy;
+use App\Form\CandyType;
+use App\Form\CategoryType;
 use App\Repository\CandyRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,30 +13,48 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
-#[Route('/admin/article', 'admin_article')]
+#[Route('/admin/article', 'admin_article_')]
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index()
+    public function index(CandyRepository $repository)
     {
-        return $this->render('admin/article/index.html.twig');
+        $bonbons = $repository->findAll();
+
+        return $this->render('admin/article/index.html.twig',['bonbons' => $bonbons]);
     }
 
     #[Route('/create', name: 'create')]
-    public function create(EntityManagerInterface $em)
+    public function create(Request $request, EntityManagerInterface $em)
     {
+        $bonbon = new Candy();
+        $form = $this->createForm(CandyType::class,$bonbon);
+        $form->handleRequest($request);
 
-        $candy = new Candy();
-        $candy->setName('Sucette')
-            ->setSlug('fraise')
-            ->setDescription('Un super bonbon')
-            ->setCreateAt(new DateTimeImmutable());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bonbon->setCreateAt(new DateTimeImmutable());
+            $em->persist($bonbon);
+            $em->flush();
 
-        $em->persist($candy);
-        $em->flush();
-        dd($candy);
+           $this->addFlash('success','Un nouveau bonbon a été ajouté !');
 
-        return $this->render('admin/article/create.html.twig');
+           return $this->redirectToRoute('admin_article_index');
+        }
+        return $this->render('admin/article/create.html.twig',['formCandy'=>$form]);
+
+
+
+
+        // $candy = new Candy();
+        // $candy->setName('Sucette')
+        //     ->setSlug('fraise')
+        //     ->setDescription('Un super bonbon')
+        //     ->setCreateAt(new DateTimeImmutable());
+
+        // $em->persist($candy);
+        // $em->flush();
+        // dd($candy);
+
     }
 
     #[Route('/update/{id}', name: 'update', requirements: ['id' => Requirement::DIGITS])]

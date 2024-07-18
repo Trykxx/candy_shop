@@ -2,4 +2,9 @@
 
 {% block body %}
 <h1>Create Article</h1>
+
+{{ form_start(formCandy)}}
+	{{ form_rest(formCandy)}}
+	<input type="submit" value="Creer" class="btn btn-primary">
+	{{ form_end(formCandy)}}
 {% endblock %}

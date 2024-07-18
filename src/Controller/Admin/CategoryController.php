@@ -47,9 +47,11 @@ class CategoryController extends AbstractController
            $em->flush();
 
            $this->addFlash('success','Une nouvelle catégorie a été ajouté !');
+
+           return $this->redirectToRoute('admin_category_index');
         }
 
-        return $this->render('admin/category/create.html.twig',['formCategorie' => $form]);
+        return $this->render('admin/category/create.html.twig',['formCategory' => $form]);
     }
 
     #[Route('/update/{id}', name: 'update', requirements: ['id' => Requirement::DIGITS])]

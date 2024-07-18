@@ -12,14 +12,12 @@
 		{% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
-			{% block importmap %}
-				{{ importmap('app') }}
-			{% endblock %}
-		{% endblock %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
 	</head>
 	<body>
+		{% include "partials/_flash.html.twig" %}
 		{% block body %}
-			{% include "" %}
 		{% endblock %}
 	</body>
 </html>

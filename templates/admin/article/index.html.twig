@@ -2,4 +2,18 @@
 
 {% block body %}
 <h1>Accueil Candy Shop Admin</h1>
+
+<pre>
+{{dump(bonbons)}}
+</pre>
+
+<table class='table table_striped'>
+		{% for bonbon in bonbons %}
+			<tr>
+				<td>{{bonbon.name}}</td>
+				<td>{{bonbon.description }}</td>
+				<td>{{bonbon.createAt | date("d/m/Y")}}</td>
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock %}
