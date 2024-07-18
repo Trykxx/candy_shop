@@ -1,5 +1,20 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!
+{% endblock %}
 
 {% block body %}
-<h1>Accueil Candy Shop Category Admin</h1>
+	<pre>
+    {{ dump(categories) }}
+</pre>
+
+	<table>
+		{% for category in categories %}
+			<tr>
+				<td>{{category.nom}}</td>
+				<td>{{category.description }}</td>
+				<td>{{category.createAt | date("d/m/Y")}}</td>
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock %}

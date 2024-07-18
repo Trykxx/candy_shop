@@ -12,6 +12,7 @@ use DateTimeImmutable;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Route('/admin/category', 'admin_category_')]
 class CategoryController extends AbstractController
@@ -34,17 +35,21 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
-    public function create()
+    public function create(Request $request,EntityManagerInterface $em):Response
     {
-        $category = new Category();
-        $category->setNom('bonbons')
-            ->setDescription('Meilleurs bonbons du monde')
-            ->setCreateAt(new \DateTimeImmutable());
+        $categorie = new Category();
+        $form = $this->createForm(CategoryType::class,$categorie);
+        $form->handleRequest($request);
 
-        $this->em->persist($category);
-        $this->em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+           $categorie->setCreateAt(new DateTimeImmutable());
+           $em->persist($categorie);
+           $em->flush();
 
-        return $this->render('admin/category/create.html.twig');
+           $this->addFlash('success','Une nouvelle catégorie a été ajouté !');
+        }
+
+        return $this->render('admin/category/create.html.twig',['formCategorie' => $form]);
     }
 
     #[Route('/update/{id}', name: 'update', requirements: ['id' => Requirement::DIGITS])]
@@ -62,12 +67,7 @@ class CategoryController extends AbstractController
         return $this->render('admin/category/update.html.twig', [
             'formCategory' => $form
         ]);
-        // $category->setNom('Bonbons')
-        // ->setUpdateAt(new \DateTimeImmutable());
 
-        // $em->flush();
-
-        return $this->render('admin/category/update.html.twig');
     }
 
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => Requirement::DIGITS])]

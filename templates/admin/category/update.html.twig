@@ -1,5 +1,15 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!
+{% endblock %}
 
 {% block body %}
-<h1>Update Category</h1>
+	<h2>Update</h2>
+
+	{{ form_start(formCategory)}}
+	{{ form_rest(formCategory)}}
+	<input type="submit" value="Mettre à jour">
+	{{form_end(formCategory)}}
+
+
 {% endblock %}
