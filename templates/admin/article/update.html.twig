@@ -2,4 +2,13 @@
 
 {% block body %}
 <h1>Update Article</h1>
+
+<pre>
+    {{ dump(formBonbon) }}
+</pre>
+
+{{ form_start(formBonbon)}}
+	{{ form_rest(formBonbon)}}
+	<input type="submit" value="Modifier" class="btn btn-primary">
+	{{ form_end(formBonbon)}}
 {% endblock %}

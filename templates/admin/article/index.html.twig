@@ -3,16 +3,13 @@
 {% block body %}
 <h1>Accueil Candy Shop Admin</h1>
 
-<pre>
-{{dump(bonbons)}}
-</pre>
-
-<table class='table table_striped'>
+<table class='table table-striped'>
 		{% for bonbon in bonbons %}
 			<tr>
 				<td>{{bonbon.name}}</td>
 				<td>{{bonbon.description }}</td>
 				<td>{{bonbon.createAt | date("d/m/Y")}}</td>
+				<td><a href="{{path('admin_article_update',{id:bonbon.id})}}" class='btn btn-primary'>Mofidier</a></td>
 			</tr>
 		{% endfor %}
 	</table>

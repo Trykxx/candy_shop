@@ -19,7 +19,6 @@ class CandyType extends AbstractType
                 'empty_data' => ''
             ])
             ->add('description')
-            ->add('slug')
         ;
     }
 
