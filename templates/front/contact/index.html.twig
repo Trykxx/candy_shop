@@ -4,4 +4,9 @@
 
 {% block body %}
 <h1>Contact</h1>
+
+	{{ form_start(formContact)}}
+	{{ form_rest(formContact)}}
+	<input type="submit" value="Envoyer" class="btn btn-primary">
+	{{ form_end(formContact)}}
 {% endblock %}

@@ -42,7 +42,7 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           $categorie->setCreateAt(new DateTimeImmutable());
+        //    $categorie->setCreateAt(new DateTimeImmutable()); // on le fait direct dans l'entité
            $em->persist($categorie);
            $em->flush();
 

@@ -6,17 +6,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ContactDTO
 {
+    #[Assert\NotBlank(message: 'Le champ {{ label }} ne doit pas être vide')]
     private ?string $email = null;
 
+    #[Assert\NotBlank(message: 'Le champ {{ label }} ne doit pas être vide')]
+    private ?string $name = null;
+
     #[Assert\Sequentially([
-        // new Assert\NotBlank(message:'Le champ {{ label }} ne doit pas être vide'),
-        new Assert\Length(min: 10,minMessage:'Le champ {{ label }} doit contenir {{ limit }} caracteres minimum')
+        new Assert\NotBlank(message: 'Le champ {{ label }} ne doit pas être vide'),
+        new Assert\Length(min: 10, minMessage: 'Le champ {{ label }} doit contenir {{ limit }} caracteres minimum')
     ])]
-
-    private string $name = '';
-
-    #[Assert\NotBlank(message:'Le champ {{ label }} ne doit pas être vide')]
     private ?string $message = null;
+
+    #[Assert\NotBlank(message: 'Le champ {{ label }} ne doit pas être vide')]
+    private string $service;
 
     public function getEmail(): ?string
     {
@@ -53,4 +56,15 @@ class ContactDTO
         return $this;
     }
 
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
 }
